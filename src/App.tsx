@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import DataTable from "./components/DataTable/DataTable";
 import { columns, data } from "./components/DataTable/DataTableConstants";
 

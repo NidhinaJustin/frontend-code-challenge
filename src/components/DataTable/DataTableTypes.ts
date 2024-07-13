@@ -5,6 +5,10 @@ export interface UserData{
     city:string
 }
 export interface ColumnHeader{
-    label:string,
-    isChecked?:string
+    name:string,
+    isChecked?:boolean
+}
+export interface SortTypes{
+    key: string,
+    direction: string
 }
