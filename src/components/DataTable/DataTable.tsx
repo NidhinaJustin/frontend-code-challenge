@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Table, Row, Col } from "react-bootstrap";
-import { ColumnHeader, UserData ,SortTypes } from "./DataTableTypes";
+import { ColumnHeader, UserData } from "./DataTableTypes";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Pagination from "../Pagination";
 import { Input } from "reactstrap";
+import ToggleOnOutlinedIcon from '@mui/icons-material/ToggleOnOutlined';
+import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
 
 interface DataTableProps {
   data: UserData[];
   columns: ColumnHeader[];
+  isChangeTheme:boolean;
+  handleChangeTheme:()=>void;
 }
-export default function DataTable({ data, columns }: DataTableProps) {
+export default function DataTable({ data, columns,isChangeTheme, handleChangeTheme }: DataTableProps) {
   const [isColumnSettingOpen, setIsColumnSettingOpen] =
     useState<boolean>(false);
     const [userData, setUserData] =useState<UserData[]>(data)
@@ -17,7 +21,8 @@ export default function DataTable({ data, columns }: DataTableProps) {
   const [headers, setHeaders] = useState<ColumnHeader[]>(columns);
   const [postsPerPage, setPostsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchKey, setSearchKey] = useState("");
+  const [searchKey, setSearchKey] = useState<string>("");
+
 
   useEffect(() => {
     const tableHeaders = columnList.filter((i) => i.isChecked === true);
@@ -71,10 +76,12 @@ export default function DataTable({ data, columns }: DataTableProps) {
     setUserData(newdata);
   }
 
+
+
   return (
     <>
       <Row>
-        <Col md={7}>
+        <Col md={4}>
           <div className="searchBar">
             {userData.length && (
               <Input
@@ -104,6 +111,11 @@ export default function DataTable({ data, columns }: DataTableProps) {
             </Input>
           </div>
         </Col>
+        <Col md={4}>
+        <div title="Change Theme" onClick={handleChangeTheme}>
+          {isChangeTheme ? (<ToggleOnOutlinedIcon fontSize="large" style={{ color: 'white' }}  />):(<ToggleOffOutlinedIcon fontSize="large" style={{ color: 'black' }} />)}
+          </div>
+        </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md={10}>
@@ -128,7 +140,7 @@ export default function DataTable({ data, columns }: DataTableProps) {
         </Col>
         <Col md={1}>
           <div title="select header" onClick={handleSelectHeaders}>
-            <SettingsIcon color="primary" />
+            <SettingsIcon style={{ color: isChangeTheme ? 'white' : 'black' }}  />
           </div>
           {isColumnSettingOpen && (
             <div className="headerDropdown">

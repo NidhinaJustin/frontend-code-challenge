@@ -1,3 +1,11 @@
+.dataTableTheme {
+  background-image: linear-gradient(black, #1d242c, #222d38);
+  color: white;
+  min-height: 95vh;
+}
+.dataTableDefaultTheme {
+  background-image: linear-gradient(rgb(238, 233, 233), #c4c5c6, white);
+}
 .headerDropdown{
   border: 1px solid #D7DBDD;
   padding: 5px;
