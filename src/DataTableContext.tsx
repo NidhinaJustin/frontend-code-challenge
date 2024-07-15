@@ -44,7 +44,7 @@ export const DataTableProvider: React.FC<DataTableProviderProps> = ({ children }
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage, setPostsPerPage] = useState<number>(10);
   const [searchKey, setSearchKey] = useState<string>("");
-  const [isChangeTheme, setIsChangeTheme] = useState<boolean>(false);
+  const [isChangeTheme, setIsChangeTheme] = useState<boolean>(true);
   const [filteredData, setFilteredData] = useState<UserData[]>(userInfo);
 
   useEffect(() => {

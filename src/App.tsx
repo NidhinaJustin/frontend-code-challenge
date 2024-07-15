@@ -4,7 +4,7 @@ import DataTable from "./components/DataTable/DataTable";
 import { DataTableProvider } from "./DataTableContext";
 
 export default function App() {
-  const [isChangeTheme, setIsChangeTheme] = useState<boolean>(false);
+  const [isChangeTheme, setIsChangeTheme] = useState<boolean>(true);
 
   const handleChangeTheme=()=>{
     setIsChangeTheme(!isChangeTheme)

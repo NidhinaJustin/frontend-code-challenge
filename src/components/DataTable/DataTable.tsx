@@ -1,5 +1,5 @@
 import React from "react";
-import {  Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Pagination from "../Pagination";
 import { Input } from "reactstrap";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
@@ -12,10 +12,9 @@ import TableContent from "./TableContent";
 Parent component which contains, user search , page size selection, theme toggle , users list table.
 */
 
-
 interface DataTableProps {
-  isChangeTheme:boolean
-  handleChangeTheme:()=>void
+  isChangeTheme: boolean;
+  handleChangeTheme: () => void;
 }
 export default function DataTable({
   isChangeTheme,
@@ -41,21 +40,22 @@ export default function DataTable({
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
-    //Setting the search key.
+  //Setting the search key.
   const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKey(e.target.value);
   };
   //updating the theme of the screen when user toggles
-  const updateTheme=()=>{
+  const updateTheme = () => {
     handleChangeTheme();
-  }
+  };
 
   return (
     <>
       <div className="mb-4">
         <Row>
-          <Col md={4}>
-            <div className="searchBar">
+          <Col md={4} col-sm={6}>
+            <div className="labelAlignment">
+            <label>Search Users</label>
               {userData.length && (
                 <Input
                   className="w-50"
@@ -68,7 +68,7 @@ export default function DataTable({
               )}
             </div>
           </Col>
-          <Col md={4}>
+          <Col md={4} col-sm={6}>
             <div className="labelAlignment">
               <label>Choose page size</label>
               <Input
@@ -84,7 +84,7 @@ export default function DataTable({
               </Input>
             </div>
           </Col>
-          <Col md={3}>
+          <Col md={3} col-sm={6}>
             <div className="labelAlignment">
               <label>Switch Theme</label>
               <div title="Change Theme" onClick={updateTheme}>
@@ -105,7 +105,10 @@ export default function DataTable({
         </Row>
       </div>
       <Row className="justify-content-center">
-        <Col md={10}>
+        <Col md={11} col-sm={12}>
+          <div className="headerList">
+            <HeaderList isChangeTheme={isChangeTheme} />
+          </div>
           {headers.length ? (
             <div className="scrollable-table">
               {!filteredData.length && searchKey !== "" ? (
@@ -128,22 +131,19 @@ export default function DataTable({
             </div>
           )}
         </Col>
-        <Col md={1}>
-          <HeaderList isChangeTheme={isChangeTheme} />
-        </Col>
       </Row>
-      {filteredData.length>0 && headers.length>0  && (
-      <Row>
-        <Col md={12}>
-          <Pagination
-            length={userData.length}
-            postsPerPage={postsPerPage}
-            currentPage={currentPage}
-            isChangeTheme={isChangeTheme}
-            handlePagination={handlePagination}
-          />
-        </Col>
-      </Row>
+      {filteredData.length > 0 && headers.length > 0 && (
+        <Row>
+          <Col md={12} col-sm={12}>
+            <Pagination
+              length={userData.length}
+              postsPerPage={postsPerPage}
+              currentPage={currentPage}
+              isChangeTheme={isChangeTheme}
+              handlePagination={handlePagination}
+            />
+          </Col>
+        </Row>
       )}
     </>
   );
