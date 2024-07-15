@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import DataTable from "../DataTable";
 import { useDataTableContext } from "../../../DataTableContext";
 
-// Mock the DataTableContext
+// Mocking the DataTableContext
 jest.mock("../../../DataTableContext", () => ({
   useDataTableContext: jest.fn(),
 }));

@@ -1,14 +1,14 @@
 import React from "react";
 
+//Pagination component to display paginated Data
 interface PaginationProps {
   postsPerPage: number;
   length: number;
   currentPage: number;
-  isChangeTheme:boolean;
   handlePagination: (pageNumber: number) => void;
 }
 
-const Pagination = ({ postsPerPage, length, currentPage,isChangeTheme, handlePagination }: PaginationProps) => {
+const Pagination = ({ postsPerPage, length, currentPage, handlePagination }: PaginationProps) => {
   const paginationNumbers = [];
   const totalPages = Math.ceil(length / postsPerPage);
 

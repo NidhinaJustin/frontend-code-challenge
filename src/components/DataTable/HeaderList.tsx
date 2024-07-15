@@ -4,8 +4,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useDataTableContext } from "../../DataTableContext";
 import { columns } from "./DataTableConstants";
 /*
-HeaderList is for dynamically displaying the headers of the table when user selects each.
-Click the settings icon so a dropdown will be displayed .
+HeaderList is for dynamically displaying the table headers based on user selection.
+Click the settings icon to open a dropdown.
 Choose headers from the list.
 */
 

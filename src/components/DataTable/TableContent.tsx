@@ -4,8 +4,8 @@ import { useDataTableContext } from "../../DataTableContext";
 import { UserData } from "./DataTableTypes";
 
 /*
-TableCOntent is to display the users info.
-When user clicks on the header of table , the column will getsorted
+TableContent is used to display user information.
+When the user clicks on a table header, the corresponding column will be sorted.
 */
 
 export default function TableContent() {

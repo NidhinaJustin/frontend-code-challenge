@@ -9,7 +9,7 @@ import { useDataTableContext } from "../../DataTableContext";
 import TableContent from "./TableContent";
 
 /*
-Parent component which contains, user search , page size selection, theme toggle , users list table.
+Parent component that contains user search, page size selection, theme toggle, and the users list table.
 */
 
 interface DataTableProps {
@@ -139,7 +139,6 @@ export default function DataTable({
               length={userData.length}
               postsPerPage={postsPerPage}
               currentPage={currentPage}
-              isChangeTheme={isChangeTheme}
               handlePagination={handlePagination}
             />
           </Col>
