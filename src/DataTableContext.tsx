@@ -32,7 +32,7 @@ export const useDataTableContext = () => {
 };
 
 interface DataTableProviderProps {
-  children: ReactNode; // Specify the type for children
+  children: ReactNode; 
 }
 
 export const DataTableProvider: React.FC<DataTableProviderProps> = ({ children }) => {
@@ -44,21 +44,26 @@ export const DataTableProvider: React.FC<DataTableProviderProps> = ({ children }
   const [postsPerPage, setPostsPerPage] = useState<number>(10);
   const [searchKey, setSearchKey] = useState<string>("");
   const [isChangeTheme, setIsChangeTheme] = useState<boolean>(false);
-
+  const [filteredData, setFilteredData] = useState<UserData[]>(data);
 
   useEffect(() => {
     const tableHeaders = columnList.filter((i) => i.isChecked === true);
     setHeaders(tableHeaders);
   }, [columnList]);
 
-  const indexOfLastUser = currentPage * postsPerPage;
-  const indexOfFirstUser = indexOfLastUser - postsPerPage;
-  let filteredData = userData.slice(indexOfFirstUser, indexOfLastUser);
-  if (searchKey !== "") {
-    filteredData = filteredData.filter((user) => {
-      return user.name.toLowerCase().includes(searchKey.toLowerCase());
-    });
-  }
+  useEffect(()=>{
+    let filteredData:UserData[] =userData;
+    const indexOfLastUser = currentPage * postsPerPage;
+    const indexOfFirstUser = indexOfLastUser - postsPerPage;
+    if (searchKey !== "") {
+      filteredData = userData.filter((user) => {
+        return user.name.toLowerCase().includes(searchKey.toLowerCase());
+      });
+    }
+     filteredData = filteredData.slice(indexOfFirstUser, indexOfLastUser);
+    setFilteredData(filteredData);
+  },[postsPerPage,currentPage,searchKey ,userData])
+
   return (
     <DataTableContext.Provider
       value={{
