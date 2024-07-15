@@ -23,7 +23,7 @@ You can find a live demo of the application here.
 To run this project locally, follow these steps:
 
 * Clone the repository:
-   git clone https://github.com/NidhinaJustin/dataTable.git
+   git clone https://github.com/NidhinaJustin/frontend-code-challenge.git
 * Navigate to the project directory :
    cd dataTable
 * Install dependencies
