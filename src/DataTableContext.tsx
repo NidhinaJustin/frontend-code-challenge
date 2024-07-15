@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { ColumnHeader, UserData } from "./components/DataTable/DataTableTypes";
-import { columns , data } from "./components/DataTable/DataTableConstants";
+import { columns , userInfo } from "./components/DataTable/DataTableConstants";
 
 interface DataTableContextProps {
 
@@ -19,6 +19,7 @@ interface DataTableContextProps {
   setPostsPerPage:(num:number)=>void;
   setSearchKey:(key:string)=>void;
   setIsChangeTheme:(key:boolean)=>void
+  setFilteredData:(data:UserData[]) =>void;
 }
 
 const DataTableContext = createContext<DataTableContextProps | undefined>(undefined);
@@ -39,12 +40,12 @@ export const DataTableProvider: React.FC<DataTableProviderProps> = ({ children }
 
   const [columnList, setColumnList] = useState<ColumnHeader[]>(columns);
   const [headers, setHeaders] = useState<ColumnHeader[]>([]);
-  const [userData, setUserData] = useState<UserData[]>(data);
+  const [userData, setUserData] = useState<UserData[]>(userInfo);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage, setPostsPerPage] = useState<number>(10);
   const [searchKey, setSearchKey] = useState<string>("");
   const [isChangeTheme, setIsChangeTheme] = useState<boolean>(false);
-  const [filteredData, setFilteredData] = useState<UserData[]>(data);
+  const [filteredData, setFilteredData] = useState<UserData[]>(userInfo);
 
   useEffect(() => {
     const tableHeaders = columnList.filter((i) => i.isChecked === true);
@@ -82,8 +83,8 @@ export const DataTableProvider: React.FC<DataTableProviderProps> = ({ children }
         setPostsPerPage,
         setSearchKey,
         isChangeTheme,
-        setIsChangeTheme
-
+        setIsChangeTheme,
+        setFilteredData
       }}
     >
       {children}
