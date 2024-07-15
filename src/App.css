@@ -6,9 +6,22 @@
 .dataTableDefaultTheme {
   background-image: linear-gradient(rgb(238, 233, 233), #c4c5c6, white);
 }
+.headerList{
+  margin-bottom: 15px;
+  display: inline-block;
+  position: relative;
+
+}
 .headerDropdown{
   border: 1px solid #434444;
-  padding: 5px;
+  padding: 10px;
+  min-width: 100px;
+  background-color: white;
+  color: black;
+  position: absolute; 
+  top: 100%; 
+  left: -20%; 
+  z-index: 1000;
 }
 
 .pagination {
@@ -35,15 +48,12 @@
   color :#34495E;
   border: 1px solid #34495E;
 }
-.searchBar{
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-}
+
 .labelAlignment {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5px;
 }
 
 .labelAlignment label {

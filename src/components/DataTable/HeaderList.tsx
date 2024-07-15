@@ -3,6 +3,11 @@ import { ColumnHeader } from "./DataTableTypes";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useDataTableContext } from "../../DataTableContext";
 import { columns } from "./DataTableConstants";
+/*
+HeaderList is for dynamically displaying the headers of the table when user selects each.
+Click the settings icon so a dropdown will be displayed .
+Choose headers from the list.
+*/
 
 interface HeaderListProps {
   isChangeTheme: boolean;
