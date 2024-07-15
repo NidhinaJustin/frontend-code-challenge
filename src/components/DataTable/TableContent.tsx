@@ -3,34 +3,41 @@ import { Table } from "react-bootstrap";
 import { useDataTableContext } from "../../DataTableContext";
 import { UserData } from "./DataTableTypes";
 
+/*
+TableCOntent is to display the users info.
+When user clicks on the header of table , the column will getsorted
+*/
+
 export default function TableContent() {
   const { headers, filteredData, isChangeTheme ,setFilteredData } =
     useDataTableContext();
-  const [order, setOrder] = useState("ASC");
+  const [sortOrder, setSortOrder] = useState<string>("ASC");
 
+//Handling the sort functionality of the header
   function handleHeaderClick(header: keyof UserData) {
     const sortedData = [...filteredData].sort((a, b) => {
-      const aValue = a[header];
-      const bValue = b[header];
+      const firstValue = a[header];
+      const secondValue = b[header];
       
-      // Handle string comparison
-      if (typeof aValue === "string" && typeof bValue === "string") {
-        return order === "ASC"
-          ? aValue.toLowerCase().localeCompare(bValue.toLowerCase())
-          : bValue.toLowerCase().localeCompare(aValue.toLowerCase());
+      // Handle case where the values are of data type  string.
+      if (typeof firstValue === "string" && typeof secondValue === "string") {
+        return sortOrder === "ASC"
+          ? firstValue.toLowerCase().localeCompare(secondValue.toLowerCase())
+          : secondValue.toLowerCase().localeCompare(firstValue.toLowerCase());
       }
 
-      // Handle number comparison
-      if (typeof aValue === "number" && typeof bValue === "number") {
-        return order === "ASC" ? aValue - bValue : bValue - aValue;
+      // Handling case where valuesof data type number.
+      if (typeof firstValue === "number" && typeof secondValue === "number") {
+        return sortOrder === "ASC" ? firstValue - secondValue : secondValue - firstValue;
       }
-
-      return 0; // Handle cases where values are not comparable like Undefined or Null Values or comparing different Types:
+    // Handle cases where values are not comparable like Undefined or Null Values or comparing different Types:
+      return 0; 
     });
 
     setFilteredData(sortedData);
-    setOrder(order === "ASC" ? "DSC" : "ASC");
+    setSortOrder(sortOrder === "ASC" ? "DSC" : "ASC");
   }
+  //Converting the string to lowecase.
   const getKeyName = (label: string) => {
     let key = label?.toLowerCase();
     return key as keyof UserData;

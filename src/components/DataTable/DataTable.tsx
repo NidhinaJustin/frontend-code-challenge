@@ -8,6 +8,11 @@ import HeaderList from "./HeaderList";
 import { useDataTableContext } from "../../DataTableContext";
 import TableContent from "./TableContent";
 
+/*
+Parent component which contains, user search , page size selection, theme toggle , users list table.
+*/
+
+
 interface DataTableProps {
   isChangeTheme:boolean
   handleChangeTheme:()=>void
@@ -28,6 +33,7 @@ export default function DataTable({
     setCurrentPage,
   } = useDataTableContext();
 
+  //handling the page size and setting the data to context value.
   const handlePageSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pageSize = parseInt(e.target.value);
     setPostsPerPage(pageSize);
@@ -35,9 +41,11 @@ export default function DataTable({
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
+    //Setting the search key.
   const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKey(e.target.value);
   };
+  //updating the theme of the screen when user toggles
   const updateTheme=()=>{
     handleChangeTheme();
   }
@@ -105,7 +113,7 @@ export default function DataTable({
                   className="messageBlock"
                   style={{ color: isChangeTheme ? "white" : "#34495E" }}
                 >
-                  <h3>{`No user with the key ${searchKey} exists`}</h3>
+                  <h3>{`No user with the key  "${searchKey}" exists`}</h3>
                 </div>
               ) : (
                 <TableContent />
