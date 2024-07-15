@@ -18,6 +18,8 @@ export default function TableContent() {
     let key = label?.toLowerCase();
     return key as keyof UserData;
   };
+  console.log(filteredData);
+  
   return (
     <div className="scrollable-table">
       {headers.length ? (

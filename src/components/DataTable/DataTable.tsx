@@ -31,9 +31,7 @@ export default function DataTable({
   const handlePageSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pageSize = parseInt(e.target.value);
     setPostsPerPage(pageSize);
-    
   };
-
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
