@@ -1,61 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { Table, Row, Col } from "react-bootstrap";
-import { ColumnHeader, UserData } from "./DataTableTypes";
-import SettingsIcon from "@mui/icons-material/Settings";
+import React from "react";
+import {  Row, Col } from "react-bootstrap";
 import Pagination from "../Pagination";
 import { Input } from "reactstrap";
-import ToggleOnOutlinedIcon from '@mui/icons-material/ToggleOnOutlined';
-import ToggleOffOutlinedIcon from '@mui/icons-material/ToggleOffOutlined';
+import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
+import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
+import HeaderList from "./HeaderList";
+import { useDataTableContext } from "../../DataTableContext";
+import TableContent from "./TableContent";
 
 interface DataTableProps {
-  data: UserData[];
-  columns: ColumnHeader[];
-  isChangeTheme:boolean;
-  handleChangeTheme:()=>void;
+  isChangeTheme:boolean
+  handleChangeTheme:()=>void
 }
-export default function DataTable({ data, columns,isChangeTheme, handleChangeTheme }: DataTableProps) {
-  const [isColumnSettingOpen, setIsColumnSettingOpen] =
-    useState<boolean>(false);
-    const [userData, setUserData] =useState<UserData[]>(data)
-  const [columnList, setColumnList] = useState<ColumnHeader[]>(columns);
-  const [headers, setHeaders] = useState<ColumnHeader[]>(columns);
-  const [postsPerPage, setPostsPerPage] = useState<number>(10);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [searchKey, setSearchKey] = useState<string>("");
+export default function DataTable({
+  isChangeTheme,
+  handleChangeTheme,
+}: DataTableProps) {
+  const {
+    headers,
+    filteredData,
+    userData,
+    postsPerPage,
+    searchKey,
+    currentPage,
+    setPostsPerPage,
+    setSearchKey,
+    setCurrentPage,
+  } = useDataTableContext();
 
-
-  useEffect(() => {
-    const tableHeaders = columnList.filter((i) => i.isChecked === true);
-    setHeaders(tableHeaders);
-  }, [columnList]);
-
-  const getKeyName = (label: string) => {
-    let key = label?.toLowerCase();
-    return key as keyof UserData;
-  };
-
-  const handleSelectHeaders = () => {
-    setIsColumnSettingOpen(!isColumnSettingOpen);
-  };
-
-  const handleCheckboxChange = (column: ColumnHeader) => {
-    let headerList = [...columnList];
-    let header = column;
-    header.isChecked = header.isChecked ? !header.isChecked : true;
-    const index = headerList.findIndex((item) => item.name === column.name);
-    if (index !== -1) {
-      headerList[index] = header;
-    }
-    setColumnList(headerList);
-  };
   const handlePageSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pageSize = parseInt(e.target.value);
     setPostsPerPage(pageSize);
+    
   };
-
-  const indexOfLastUser = currentPage * postsPerPage;
-  const indexOfFirstUser = indexOfLastUser - postsPerPage;
-  let filteredData = userData.slice(indexOfFirstUser, indexOfLastUser);
 
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -63,114 +40,105 @@ export default function DataTable({ data, columns,isChangeTheme, handleChangeThe
   const handleSearchUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKey(e.target.value);
   };
-
-  if (searchKey !== "") {
-    filteredData = filteredData.filter((user) => {
-      return user.name.toLowerCase().includes(searchKey.toLowerCase());
-    });
+  const updateTheme=()=>{
+    handleChangeTheme();
   }
-
-  function handleHeaderClick(header:string) {
-    let title= header as keyof UserData
-    const newdata = [...userData].sort((a, b) => (a[title] > b[title] ? 1 : -1));
-    setUserData(newdata);
-  }
-
-
 
   return (
     <>
-      <Row>
-        <Col md={4}>
-          <div className="searchBar">
-            {userData.length && (
+      <div className="mb-4">
+        <Row>
+          <Col md={4}>
+            <div className="searchBar">
+              {userData.length && (
+                <Input
+                  className="w-50"
+                  type="text"
+                  name="searchKey"
+                  value={searchKey}
+                  onChange={handleSearchUser}
+                  placeholder="Search users..."
+                />
+              )}
+            </div>
+          </Col>
+          <Col md={4}>
+            <div className="labelAlignment">
+              <label>Choose page size</label>
               <Input
-                className="w-50"
-                type="text"
-                name="searchKey"
-                value={searchKey}
-                onChange={handleSearchUser}
-                placeholder="Search users..."
-              />
-            )}
-          </div>
-        </Col>
-        <Col md={4}>
-          <div className="labelInputContainer ">
-            <label>Select page size</label>
-            <Input
-              id="postsPerPage"
-              type="select"
-              name="postsPerPage"
-              value={postsPerPage}
-              onChange={handlePageSize}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Input>
-          </div>
-        </Col>
-        <Col md={4}>
-        <div title="Change Theme" onClick={handleChangeTheme}>
-          {isChangeTheme ? (<ToggleOnOutlinedIcon fontSize="large" style={{ color: 'white' }}  />):(<ToggleOffOutlinedIcon fontSize="large" style={{ color: 'black' }} />)}
-          </div>
-        </Col>
-      </Row>
+                id="postsPerPage"
+                type="select"
+                name="postsPerPage"
+                value={postsPerPage}
+                onChange={handlePageSize}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </Input>
+            </div>
+          </Col>
+          <Col md={3}>
+            <div className="labelAlignment">
+              <label>Switch Theme</label>
+              <div title="Change Theme" onClick={updateTheme}>
+                {isChangeTheme ? (
+                  <ToggleOnOutlinedIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                  />
+                ) : (
+                  <ToggleOffOutlinedIcon
+                    fontSize="large"
+                    style={{ color: "#34495E" }}
+                  />
+                )}
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </div>
       <Row className="justify-content-center">
         <Col md={10}>
-          <Table className="tableContent" striped bordered hover>
-            <thead>
-              <tr>
-                {headers.map((col, key) => (
-                  <th onClick={()=>handleHeaderClick(col.name)} key={key}>{col.name}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((user, index) => (
-                <tr key={index}>
-                  {headers.map((col, key) => (
-                    <td key={key}>{user[getKeyName(col.name)]}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-        <Col md={1}>
-          <div title="select header" onClick={handleSelectHeaders}>
-            <SettingsIcon style={{ color: isChangeTheme ? 'white' : 'black' }}  />
-          </div>
-          {isColumnSettingOpen && (
-            <div className="headerDropdown">
-              {columns.map((col, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      name={col.name}
-                      checked={col["isChecked"] ?? false}
-                      onChange={() => handleCheckboxChange(col)}
-                    />
-                    {col.name}
-                  </label>
+          {headers.length ? (
+            <div className="scrollable-table">
+              {!filteredData.length && searchKey !== "" ? (
+                <div
+                  className="messageBlock"
+                  style={{ color: isChangeTheme ? "white" : "#34495E" }}
+                >
+                  <h3>{`No user with the key ${searchKey} exists`}</h3>
                 </div>
-              ))}
+              ) : (
+                <TableContent />
+              )}
+            </div>
+          ) : (
+            <div
+              className="messageBlock"
+              style={{ color: isChangeTheme ? "white" : "#34495E" }}
+            >
+              <h3>Please select header from the list</h3>
             </div>
           )}
         </Col>
+        <Col md={1}>
+          <HeaderList isChangeTheme={isChangeTheme} />
+        </Col>
       </Row>
+      {filteredData.length>0 && headers.length>0  && (
       <Row>
         <Col md={12}>
           <Pagination
             length={userData.length}
             postsPerPage={postsPerPage}
             currentPage={currentPage}
+            isChangeTheme={isChangeTheme}
             handlePagination={handlePagination}
           />
         </Col>
       </Row>
+      )}
     </>
   );
 }

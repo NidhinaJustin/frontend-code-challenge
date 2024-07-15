@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import DataTable from "./components/DataTable/DataTable";
-import { columns, data } from "./components/DataTable/DataTableConstants";
+import { DataTableProvider } from "./DataTableContext";
 
 export default function App() {
   const [isChangeTheme, setIsChangeTheme] = useState<boolean>(false);
@@ -11,9 +11,13 @@ export default function App() {
   }
    
   return (
+    <DataTableProvider>
     <div className={`${isChangeTheme ? "dataTableTheme" :"dataTableDefaultTheme"}`}>
       <h1>Data Table</h1>
-      <DataTable data={data} columns={columns} isChangeTheme={isChangeTheme} handleChangeTheme={handleChangeTheme}/>
+      <DataTable isChangeTheme={isChangeTheme} handleChangeTheme={handleChangeTheme}/>
     </div>
+    </DataTableProvider>
   );
 }
+
+

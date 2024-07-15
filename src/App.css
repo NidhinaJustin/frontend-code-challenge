@@ -10,9 +10,7 @@
   border: 1px solid #D7DBDD;
   padding: 5px;
 }
-.tableContent{
-  margin-top: 2rem;
-}
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -23,29 +21,55 @@
   margin: 0 5px;
   padding: 5px 10px;
   border: none;
-  background-color: #007bff;
+  background-color: #34495E;
   color: white;
   cursor: pointer;
 }
+.pagination button:disabled {
+  background-color: #34495E; 
+  cursor: not-allowed;
+}
 
 .pagination button.active {
-  background-color: #0056b3;
+  background-color: #fff;
+  color :#34495E;
+  border: 1px solid #34495E;
 }
 .searchBar{
   display: flex;
   justify-content: center; 
   align-items: center; 
 }
-.labelInputContainer {
+.labelAlignment {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.labelInputContainer label {
+.labelAlignment label {
   margin-right: 10px; 
 }
-.labelInputContainer select{
+.labelAlignment select{
   width: 50%;
-  
+}
+.messageBlock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+}
+.scrollable-table{
+  max-height: 400px;
+  overflow: auto
+}
+table {
+  border-collapse: collapse;
+}
+.scrollable-table::-webkit-scrollbar {
+  display: none;
+}
+.tableContent th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
