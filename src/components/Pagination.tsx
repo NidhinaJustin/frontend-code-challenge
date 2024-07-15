@@ -4,10 +4,11 @@ interface PaginationProps {
   postsPerPage: number;
   length: number;
   currentPage: number;
+  isChangeTheme:boolean;
   handlePagination: (pageNumber: number) => void;
 }
 
-const Pagination = ({ postsPerPage, length, currentPage, handlePagination }: PaginationProps) => {
+const Pagination = ({ postsPerPage, length, currentPage,isChangeTheme, handlePagination }: PaginationProps) => {
   const paginationNumbers = [];
   const totalPages = Math.ceil(length / postsPerPage);
 
@@ -16,7 +17,7 @@ const Pagination = ({ postsPerPage, length, currentPage, handlePagination }: Pag
   }
 
   return (
-    <div className="pagination">
+    <div className={`pagination `}>
       <button
         onClick={() => handlePagination(currentPage - 1)}
         disabled={currentPage === 1}
